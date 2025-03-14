@@ -1,18 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CollegeController;
+use App\Http\Controllers\StudentController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
+// Home route (optional)
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/colleges');
 });
+
+// Resourceful routes for Colleges and Students
+Route::resource('colleges', CollegeController::class);
+Route::resource('students', StudentController::class);
