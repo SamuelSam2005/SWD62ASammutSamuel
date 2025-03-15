@@ -30,16 +30,16 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate request data
-        $request->validate([
-            'name' => 'required',
+        // Validate input
+        $request->validate(
+            ['name' => 'required|max:255',
             'email' => 'required|email|unique:students,email',
             'phone' => 'required|digits:8',
             'dob' => 'required|date',
-            'college_id' => 'required|exists:colleges,id',
-        ]);
+            'college_id' => 'required|exists:colleges,id',]
+        );
 
-        // Create new student record
+        // Create new student
         Student::create($request->all());
 
         return redirect()->route('students.index')->with('success', 'Student added successfully!');
@@ -59,13 +59,14 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        $request->validate([
-            'name' => 'required',
+        // Validate input
+        $request->validate(
+            ['name' => 'required|max:255',
             'email' => 'required|email|unique:students,email,' . $student->id,
             'phone' => 'required|digits:8',
             'dob' => 'required|date',
-            'college_id' => 'required|exists:colleges,id',
-        ]);
+            'college_id' => 'required|exists:colleges,id',]
+        );
 
         $student->update($request->all());
 
