@@ -5,6 +5,26 @@
 @section('content')
     <div class="container">
         <h1 class="mb-4 text-center">Students</h1>
+
+        <!-- Filter Form -->
+        <form method="GET" action="{{ route('students.index') }}" class="mb-3">
+            <div class="row">
+                <div class="col-md-4">
+                    <select name="college_id" class="form-select" onchange="this.form.submit()">
+                        <option value="">All Colleges</option>
+                        @foreach ($colleges as $college)
+                            <option value="{{ $college->id }}" {{ $selectedCollege == $college->id ? 'selected' : '' }}>
+                                {{ $college->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ route('students.index') }}" class="btn btn-secondary">Reset</a>
+                </div>
+            </div>
+        </form>
+
         <a href="{{ route('students.create') }}" class="btn btn-primary mb-3">Add New Student</a>
 
         @if ($students->isEmpty())
@@ -28,7 +48,6 @@
                             <td>{{ $student->phone }}</td>
                             <td>{{ $student->college->name }}</td>
                             <td>
-                                <!-- Fixed Edit Button -->
                                 <a href="{{ route('students.edit', $student->id) }}" class="btn btn-warning btn-sm">Edit</a>
 
                                 <form action="{{ route('students.destroy', $student->id) }}" method="POST" class="d-inline"

@@ -10,11 +10,24 @@ class StudentController extends Controller
     /**
      * Display a listing of the students.
      */
-    public function index()
+        public function index(Request $request)
     {
-        $students = Student::with('college')->get(); // Fetch all students with college data
-        return view('students.index', compact('students'));
+        // Fetch all colleges for the dropdown
+        $colleges = College::all();
+
+        // Get selected college_id from the request
+        $selectedCollege = $request->input('college_id');
+
+        // Query students based on the selected college
+        $students = Student::with('college')
+            ->when($selectedCollege, function ($query) use ($selectedCollege) {
+                return $query->where('college_id', $selectedCollege);
+            })
+            ->get();
+
+        return view('students.index', compact('students', 'colleges', 'selectedCollege'));
     }
+
 
     /**
      * Show the form for creating a new student.
