@@ -45,7 +45,7 @@
         @if ($students->isEmpty())
             <div class="alert alert-warning">No students found.</div>
         @else
-            <table class="table table-hover shadow-sm">
+            <table class="table table-striped table-bordered shadow-sm">
                 <thead class="thead-dark">
                     <tr>
                         <th>Name</th>

@@ -10,7 +10,7 @@
         @if ($colleges->isEmpty())
             <div class="alert alert-warning">No colleges found.</div>
         @else
-            <table class="table table-hover shadow-sm">
+            <table class="table table-striped table-bordered shadow-sm">
                 <thead class="thead-dark">
                     <tr>
                         <th>Name</th>
