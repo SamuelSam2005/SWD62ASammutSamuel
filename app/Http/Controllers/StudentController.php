@@ -10,23 +10,26 @@ class StudentController extends Controller
     /**
      * Display a listing of the students.
      */
-        public function index(Request $request)
+    public function index(Request $request)
     {
-        // Fetch all colleges for the dropdown
+        // Fetch all colleges for the dropdown filter
         $colleges = College::all();
-
-        // Get selected college_id from the request
+    
+        // Get selected filter values from request
         $selectedCollege = $request->input('college_id');
-
-        // Query students based on the selected college
+        $sortOrder = $request->input('sort', 'asc'); // Default sorting is A-Z
+    
+        // Query students based on filtering and sorting
         $students = Student::with('college')
             ->when($selectedCollege, function ($query) use ($selectedCollege) {
                 return $query->where('college_id', $selectedCollege);
             })
+            ->orderBy('name', $sortOrder) // Sort by student name
             ->get();
-
-        return view('students.index', compact('students', 'colleges', 'selectedCollege'));
+    
+        return view('students.index', compact('students', 'colleges', 'selectedCollege', 'sortOrder'));
     }
+    
 
 
     /**

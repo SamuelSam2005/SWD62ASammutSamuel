@@ -6,9 +6,10 @@
     <div class="container">
         <h1 class="mb-4 text-center">Students</h1>
 
-        <!-- Filter Form -->
+        <!-- Filter and Sort Form -->
         <form method="GET" action="{{ route('students.index') }}" class="mb-3">
             <div class="row">
+                <!-- College Filter -->
                 <div class="col-md-4">
                     <select name="college_id" class="form-select" onchange="this.form.submit()">
                         <option value="">All Colleges</option>
@@ -19,6 +20,20 @@
                         @endforeach
                     </select>
                 </div>
+
+                <!-- Sorting Buttons -->
+                <div class="col-md-4">
+                    <a href="{{ route('students.index', ['college_id' => $selectedCollege, 'sort' => 'asc']) }}"
+                        class="btn btn-outline-primary {{ $sortOrder == 'asc' ? 'active' : '' }}">
+                        Sort A-Z
+                    </a>
+                    <a href="{{ route('students.index', ['college_id' => $selectedCollege, 'sort' => 'desc']) }}"
+                        class="btn btn-outline-primary {{ $sortOrder == 'desc' ? 'active' : '' }}">
+                        Sort Z-A
+                    </a>
+                </div>
+
+                <!-- Reset Button -->
                 <div class="col-md-2">
                     <a href="{{ route('students.index') }}" class="btn btn-secondary">Reset</a>
                 </div>
